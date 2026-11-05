@@ -1,0 +1,13 @@
+[Unit]
+Description=Parthenos lucid-dream nightly calibration
+Documentation=https://github.com/
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/projects/Parthenos/bin/parthenos-dream --out %h/projects/Parthenos/data/dream-report.json
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=default.target

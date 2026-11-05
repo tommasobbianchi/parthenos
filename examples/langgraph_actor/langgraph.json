@@ -1,0 +1,6 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "actor": "./graph.py:app"
+  }
+}

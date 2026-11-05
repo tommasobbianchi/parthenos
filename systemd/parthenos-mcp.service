@@ -1,0 +1,15 @@
+[Unit]
+Description=Parthenos MCP server (durable metacognitive memory)
+After=network.target
+Wants=parthenos-mem0.service langgraph.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/projects/Parthenos
+ExecStart=%h/projects/Parthenos/bin/parthenos-mcp --host 127.0.0.1 --port 8766 --store %h/projects/Parthenos/data/graph.snapshot.json --snapshot-every 30
+Restart=on-failure
+RestartSec=3
+Nice=5
+
+[Install]
+WantedBy=default.target

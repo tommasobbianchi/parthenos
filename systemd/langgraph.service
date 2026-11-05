@@ -1,0 +1,14 @@
+[Unit]
+Description=LangGraph orchestration backend (Parthenos actor)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/projects/Parthenos/examples/langgraph_actor
+ExecStart=%h/.venvs/langgraph/bin/langgraph dev --host 127.0.0.1 --port 2024
+Restart=on-failure
+RestartSec=3
+Nice=10
+
+[Install]
+WantedBy=default.target

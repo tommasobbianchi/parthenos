@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""Start the Parthenos MCP server (loopback) for actor wiring.
+
+Usage: bin/parthenos-mcp [--port N] [--host H] [--store SNAPSHOT.json] [--snapshot-every SECONDS]
+Default: 127.0.0.1:8766 (8765 is occupied on nativedev by `aipmo`).
+With --store, the graph is loaded from the snapshot (if present) and saved back
+periodically (and on shutdown), making agent memory durable across restarts.
+"""
+import argparse
+import sys
+
+sys.path.insert(0, __file__.rsplit("/", 2)[0])
+
+from parthenos.graph import GraphStore
+from parthenos.mcp_server import McpServer
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--port", type=int, default=8766)
+    parser.add_argument("--store", help="snapshot JSON path (load/save; durable memory)")
+    parser.add_argument("--snapshot-every", type=float, default=60.0,
+                        help="seconds between snapshot saves (default 60)")
+    args = parser.parse_args()
+    print(f"parthenos-mcp listening {args.host}:{args.port}"
+          + (f" (snapshot {args.store})" if args.store else ""), flush=True)
+    McpServer(
+        GraphStore(),
+        host=args.host,
+        port=args.port,
+        snapshot_path=args.store,
+        snapshot_interval=args.snapshot_every,
+    ).start()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly Parthenos lucid-dream calibration (04:30 Europe/Rome)
+
+[Timer]
+OnCalendar=*-*-* 04:30:00
+Persistent=true
+RandomizedDelaySec=900
+
+[Install]
+WantedBy=timers.target

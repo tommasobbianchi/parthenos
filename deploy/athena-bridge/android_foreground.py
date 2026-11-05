@@ -16,14 +16,38 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import pathlib
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = pathlib.Path(os.environ.get("ATHENA_ROOT", str(Path.home() / "projects" / "athena")))
-DATA = ROOT / "modules" / "llm-context" / "data"
+
+def _module_dir(root: Path) -> Path:
+    """llm-context module dir in a real Athena tree or the vendored kit."""
+    m = root / "modules" / "llm-context"
+    return m if m.is_dir() else root / "llm-context"
+
+
+def _resolve_root() -> Path:
+    env = os.environ.get("ATHENA_ROOT")
+    if env:
+        return Path(env)
+    here = Path(__file__).resolve()
+    # real Athena tree: <ath>/modules/llm-context/<file>
+    if len(here.parents) > 3:
+        p = here.parents[3]
+        if (p / "modules" / "llm-context" / "inject.py").exists():
+            return p
+    # vendored kit in a Parthenos clone
+    for anc in here.parents:
+        kit = anc / "athena_kit"
+        if (kit / "llm-context" / "inject.py").exists():
+            return kit
+    return Path.home() / "projects" / "athena"
+
+
+ROOT = _resolve_root()
+DATA = _module_dir(ROOT) / "data"
 EVENTS = DATA / "browser-events.ndjson"
 
 PACKAGE_ALIASES = {

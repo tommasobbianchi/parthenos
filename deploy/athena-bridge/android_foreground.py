@@ -18,7 +18,7 @@ import json
 import os
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 
@@ -62,7 +62,7 @@ DEFAULT_SERIAL = "100.120.88.98:5555"  # pixel-9a over Tailscale
 
 
 def iso_now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(UTC).isoformat(timespec="seconds")
 
 
 def foreground_package(serial: str) -> str | None:

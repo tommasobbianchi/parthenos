@@ -14,6 +14,7 @@ import subprocess
 import sys
 from datetime import datetime
 
+
 def _tailscale():
     try:
         p = subprocess.run(["tailscale", "status", "--json"],
@@ -22,8 +23,8 @@ def _tailscale():
             peers = json.loads(p.stdout).get("Peer", {})
             up = [x for x in peers.values() if x.get("Online")]
             return len(up), len(peers) - len(up)
-    except Exception:
-        pass
+    except (subprocess.TimeoutExpired, OSError, json.JSONDecodeError) as exc:
+        print(f"[athena-kit] tailscale: {type(exc).__name__}", file=sys.stderr)
     return None, None
 
 def main() -> int:

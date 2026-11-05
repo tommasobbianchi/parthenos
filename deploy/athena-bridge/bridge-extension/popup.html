@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font-family: system-ui, sans-serif; width: 280px; padding: 12px; }
+    h1 { font-size: 14px; margin: 0 0 8px; }
+    button { width: 100%; padding: 8px; margin-top: 6px; }
+    .hint { color: #666; font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Athena Bridge</h1>
+  <p style="font-size:12px">Reports structural presence to Athena (metadata only).</p>
+  <label style="font-size:12px">
+    <input type="checkbox" id="autocontext" /> Inject context block into composer (opt-in)
+  </label>
+  <button id="inject">Inject context now</button>
+  <p class="hint">Never reads message content / keystrokes / clipboard.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

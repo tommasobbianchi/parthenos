@@ -1,0 +1,13 @@
+[Unit]
+Description=Athena — browser presence receiver (loopback :8008) for the Bridge extension
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/projects/athena/modules/llm-context/browser_receiver.py
+Restart=on-failure
+RestartSec=5
+Nice=10
+
+[Install]
+WantedBy=default.target

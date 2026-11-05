@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Launch Chrome with the Athena Bridge extension loaded (unpacked).
+# Intended to be copied to ~/.local/bin/chrome-with-athena on target hosts.
+EXT_DIR="${ATHENA_BRIDGE_EXT:-$HOME/.local/share/athena-bridge-extension}"
+if [ ! -f "$EXT_DIR/manifest.json" ]; then
+  echo "extension not found at $EXT_DIR (run deploy-bridge.sh first)" >&2
+  exit 1
+fi
+CHROME_BIN="${CHROME_BIN:-google-chrome}"
+exec "$CHROME_BIN" --load-extension="$EXT_DIR" "$@"

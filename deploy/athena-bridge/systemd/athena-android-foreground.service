@@ -1,0 +1,8 @@
+[Unit]
+Description=Athena — Android foreground sense (Pixel over adb/Tailscale) — every 30s
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/projects/athena/modules/llm-context/android_foreground.py
+Nice=10

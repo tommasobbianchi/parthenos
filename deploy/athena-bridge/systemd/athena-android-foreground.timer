@@ -1,0 +1,10 @@
+[Unit]
+Description=Every 30s: Android foreground sense
+
+[Timer]
+OnCalendar=*:0/30
+AccuracySec=5s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

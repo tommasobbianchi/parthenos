@@ -77,4 +77,13 @@
       return false;
     },
   };
+
+  // Handle the popup's "inject now" message.
+  chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (msg && msg.type === "athena-inject") {
+      const ok = window.__ATHENA_BRIDGE__.inject(msg.text || "");
+      sendResponse({ ok });
+    }
+    return false; // no async response
+  });
 })();
